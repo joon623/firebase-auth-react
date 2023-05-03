@@ -20,9 +20,10 @@ function App() {
                 Authorization: `Bearer ${idToken}`,
               },
             })
-              .then((res) => JSON.parse(res))
+              .then((res) => res.json(res))
               .then((res) => {
                 if (res.ok) {
+                  console.log(res);
                   setLoggedIn(true);
                 }
               })
