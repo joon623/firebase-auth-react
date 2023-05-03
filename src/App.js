@@ -6,10 +6,25 @@ function App() {
   const handleSignUp = () => {
     signInWithPopup(firebaseAuth, googleProvider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const idToken = credential.idToken;
-        console.log("idToken", idToken);
+        result.user
+          .getIdToken()
+          .then((idToken) => {
+            // TODO: Send the ID token to the server
+            console.log("idToken", idToken);
+            fetch("/auth/sign-in", {
+              method: "post",
+              headers: {
+                Authorization: `Bearer ${idToken}`,
+              },
+            })
+              .then((res) => JSON.parse(res))
+              .then((res) => {
+                console.log(res);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         // Handle Errors here.
