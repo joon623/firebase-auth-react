@@ -28,6 +28,7 @@ function App() {
               })
               .catch((error) => {
                 window.alert(error);
+                window.alert("error check please");
               });
           })
           .catch((error) => {
