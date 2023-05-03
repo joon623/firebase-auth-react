@@ -1,8 +1,11 @@
 import "./App.css";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { firebaseAuth, googleProvider } from "./firebase";
+import { useState } from "react";
 
 function App() {
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
   const handleSignUp = () => {
     signInWithPopup(firebaseAuth, googleProvider)
       .then((result) => {
@@ -19,7 +22,12 @@ function App() {
             })
               .then((res) => JSON.parse(res))
               .then((res) => {
-                console.log(res);
+                if (res.ok) {
+                  setLoggedIn(true);
+                }
+              })
+              .catch((error) => {
+                window.alert(error);
               });
           })
           .catch((error) => {
@@ -40,7 +48,11 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={handleSignUp}>sign up throught google</button>
+      {isLoggedIn ? (
+        <div>"login 성공"</div>
+      ) : (
+        <button onClick={handleSignUp}>sign up throught google</button>
+      )}
     </div>
   );
 }
