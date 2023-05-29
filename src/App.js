@@ -14,7 +14,7 @@ function App() {
           .then((idToken) => {
             // TODO: Send the ID token to the server
             console.log("idToken", idToken);
-            fetch("https://winners-high-be-test.herokuapp.com/auth/sign-in", {
+            fetch("https://winners-high-be-test.herokuapp.com/auth/sign-up", {
               method: "post",
               headers: {
                 Authorization: `Bearer ${idToken}`,
